@@ -1,3 +1,4 @@
+# Module 2: Moderatie
 # Voordat een bericht ook daadwerkelijk op het stationshalscherm wordt gezet, wordt er door een moderator van de NS
 # naar de berichten gekeken. De moderator kan een bericht goed- of afkeuren. Alleen goedgekeurde berichten worden
 # gepubliceerd op het stationshalscherm.
@@ -37,8 +38,8 @@ def berichten():
     mail_mod = str(input(f'Vul hier het mail adres van de moderator in:'))
     for part in lines:
         splitted_part = part.strip().split(',')
-        print(f'{splitted_part[2]} zegt op: {splitted_part[1]} \n{splitted_part[0]} over station {splitted_part[3]}\n')
-        keuring = str(input(f'wordt dit bericht goedgekeurd? Y/N: ')).lower()
+        print(f'{splitted_part[2]} zegt op: {splitted_part[1]} \n{splitted_part[0]} over station {splitted_part[3]}')
+        keuring = str(input(f'wordt dit bericht goedgekeurd? Y/N: \n')).lower()
         lst.append([splitted_part[0], splitted_part[1], splitted_part[2], splitted_part[3], keuring, time(), naam_mod,
                     mail_mod])
     return lst
@@ -52,11 +53,14 @@ def schrijf(lst):
     openen.close()
 
 
+schrijf(berichten())
 
 reviews = open('zuil_berichen.csv', 'r')
 read = reviews.readlines()
 for line in read:
-    losline = line.strip().split(",")
+    meningen = line.strip().split(",")
+    dbmeningen = (meningen[0], meningen[1], meningen[2], meningen[3])
+    dbmoderatie = (meningen[4], meningen[5], meningen[6], meningen[7])
 
     with sql.connect(
             host='localhost',
@@ -65,6 +69,18 @@ for line in read:
             password='Welkom123'
     ) as con:
         with con.cursor() as cur:
-            query = """INSERT INTO review values %s"""
-            placeholder = (tuple(losline),)
-            cur.execute(query, placeholder)
+            query02 = """INSERT INTO Moderatie values %s"""
+            placeholder02 = (tuple(dbmoderatie),)
+            cur.execute(query02, placeholder02)
+
+            query01 = """INSERT INTO Review values %s"""
+            placeholder01 = (tuple(dbmeningen),)
+            cur.execute(query01, placeholder01)
+
+
+def delete():
+    openen = open('zuil_berichen.csv', 'w')
+    openen.close()
+
+
+delete()
