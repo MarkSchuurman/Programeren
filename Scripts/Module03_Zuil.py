@@ -12,7 +12,7 @@ conn = pg.connect(
 )
 
 # -------------------------------------------------------------------------------------------------------------------- #
-
+#
 window = tk.Tk()
 window.geometry('800x450')
 window.resizable(width=False, height=False)
@@ -77,16 +77,16 @@ counter4 = 0
 # -------------------------------------------------------------------------------------------------------------------- #
 
 img_lift = ImageTk.PhotoImage(
-    Image.open("D:/Hogeschool_Utrecht/Leerjaar_01/Periode_A/01_Project/img_lift.png").resize(
+    Image.open("D:/Hogeschool_Utrecht/Leerjaar_01/Periode_A/01_Project/Foto/img_lift.png").resize(
         (110, 110)))
 img_ovfiets = ImageTk.PhotoImage(
-    Image.open("D:/Hogeschool_Utrecht/Leerjaar_01/Periode_A/01_Project/img_ovfiets.png").resize(
+    Image.open("D:/Hogeschool_Utrecht/Leerjaar_01/Periode_A/01_Project/Foto/img_ovfiets.png").resize(
         (110, 110)))
 img_pr = ImageTk.PhotoImage(
-    Image.open("D:/Hogeschool_Utrecht/Leerjaar_01/Periode_A/01_Project/img_pr.png").resize(
+    Image.open("D:/Hogeschool_Utrecht/Leerjaar_01/Periode_A/01_Project/Foto/img_pr.png").resize(
         (110, 110)))
 img_toilet = ImageTk.PhotoImage(
-    Image.open("D:/Hogeschool_Utrecht/Leerjaar_01/Periode_A/01_Project/img_toilet.png").resize(
+    Image.open("D:/Hogeschool_Utrecht/Leerjaar_01/Periode_A/01_Project/Foto/img_toilet.png").resize(
         (110, 110)))
 
 
@@ -143,7 +143,7 @@ window.after(0, bericht_vernieuwen, counter)
 
 varbericht = tk.StringVar()
 
-berichten_label = tk.Label(berichten, textvariable=varbericht, fg='#212b5c', bg='white', font=('', 18), wraplength=510,
+berichten_label = tk.Label(berichten, textvariable=varbericht, fg='#212b5c', bg='white', font=('Comic Sans MS', 18), wraplength=510,
                            justify='left')
 berichten_label.grid(column=0, columnspan=3, row=2, sticky='nw', padx=3)
 
@@ -164,7 +164,7 @@ window.after(0, naam_vernieuwen, counter2)
 
 varnaam = tk.StringVar()
 
-naam_label = tk.Label(berichten, textvariable=varnaam, fg='#212b5c', bg='white', font=('', 25, 'bold'), wraplength=520,
+naam_label = tk.Label(berichten, textvariable=varnaam, fg='#212b5c', bg='white', font=('Comic Sans MS', 25, 'bold'), wraplength=520,
                       justify='left')
 naam_label.grid(column=0, row=0, sticky='nw')
 
@@ -186,10 +186,10 @@ window.after(0, station_vernieuwen, counter4)
 
 varstation = tk.StringVar()
 
-text_label = tk.Label(faciliteiten, text='Gegeven op station:', fg='#212b5c', bg='white', font=('', 12, 'bold'))
+text_label = tk.Label(faciliteiten, text='Gegeven op station:', fg='#212b5c', bg='white', font=('Comic Sans MS', 12, 'bold'))
 text_label.place(relx=0.5, rely=0.75, anchor='center')
 
-infostation_label = tk.Label(faciliteiten, textvariable=varstation, fg='#212b5c', bg='white', font=('', 30, 'bold'))
+infostation_label = tk.Label(faciliteiten, textvariable=varstation, fg='#212b5c', bg='white', font=('Comic Sans MS', 30, 'bold'))
 infostation_label.grid(column=0, columnspan=2, row=3, sticky='news', pady=30)
 
 
@@ -211,7 +211,7 @@ window.after(0, infobericht_vernieuwen, counter3)
 
 vardatumbericht = tk.StringVar()
 
-infobericht_label = tk.Label(berichten, textvariable=vardatumbericht, fg='#212b5c', bg='white', font=('', 15),
+infobericht_label = tk.Label(berichten, textvariable=vardatumbericht, fg='#212b5c', bg='white', font=('Comic Sans MS', 15),
                              wraplength=520,
                              justify='left')
 infobericht_label.grid(column=2, row=0, sticky='e', padx=10)
@@ -230,13 +230,13 @@ def tijd_vernieuwen():
 
 tijd.after(0, tijd_vernieuwen)
 
-tijd_label = tk.Label(tijd, textvariable=tijd_var, fg='#212b5c', bg='white', font=('', 35, 'bold'))
+tijd_label = tk.Label(tijd, textvariable=tijd_var, fg='#212b5c', bg='white', font=('Comic Sans MS', 35, 'bold'))
 tijd_label.place(relx=0.5, rely=0.5, anchor='center')
 
 # -------------------------------------------------------------------------------------------------------------------- #
 
 resource_uri = 'https://api.openweathermap.org/data/2.5/weather?q=Hilversum,' \
-               'NL&appid=e8b137b3e73902b2581e474ce7019be5&units=metric '
+               'NL&appid=e8b137b3e73902b2581e474ce7019be5&units=metric'
 weer_data = requests.get(resource_uri).json()
 
 # -------------------------------------------------------------------------------------------------------------------- #
@@ -251,20 +251,20 @@ plaatsnaam = tk.StringVar()
 
 def plaatsnaam1():
     plaatsnaam.set('Amsterdam')
-    # print(plaatsnaam.get())
     topwindow.destroy()
+    weer_krijgen()
 
 
 def plaatsnaam2():
     plaatsnaam.set('Hilversum')
-    # print(plaatsnaam.get())
     topwindow.destroy()
+    weer_krijgen()
 
 
 def plaatsnaam3():
     plaatsnaam.set('Utrecht')
-    # print(plaatsnaam.get())
     topwindow.destroy()
+    weer_krijgen()
 
 
 knop_amsterdam = tk.Button(topwindow, text='Amsterdam', bg='#212b5c', fg='#ffc917', activebackground="#212b5c",
@@ -281,17 +281,39 @@ knop_amsterdam.pack(pady=0, padx=0)
 knop_hilversum.pack(pady=0, padx=0)
 knop_utrecht.pack(pady=0, padx=0)
 
+
 # -------------------------------------------------------------------------------------------------------------------- #
 
-weer = tk.Frame(window, bg='white', )
+weer_temp_now = tk.StringVar()
+regenkans = tk.StringVar()
+
+
+def weer_krijgen():
+    weather_uri = f'https://api.openweathermap.org/data/2.5/weather?q={plaatsnaam.get()},' \
+                   'NL&appid=ef5e504bc5339965c900ce43fa5a029c&units=metric'
+    forecast_uri = f'https://api.openweathermap.org/data/2.5/forecast?q={plaatsnaam.get()},' \
+                   'NL&appid=ef5e504bc5339965c900ce43fa5a029c&units=metric'
+    weather_data = requests.get(weather_uri).json()
+    forecast_data = requests.get(forecast_uri).json()
+    weer_temp_now.set(f'Temperatuur: {weather_data["main"]["temp"]:.1f}°C')
+    regenkans.set(f'Kans op regen: {(forecast_data["list"][0]["pop"])*100}%')
+
+
+weer = tk.Frame(window, bg='white',)
 weer.grid_columnconfigure(0, weight=1)
-weer.grid_columnconfigure(1, weight=1)
+weer.grid_columnconfigure(1, weight=100)
 weer.grid_rowconfigure(0, weight=1)
 weer.grid_rowconfigure(1, weight=1)
+weer.grid_rowconfigure(2, weight=1)
+weer.grid_rowconfigure(3, weight=100)
 weer.grid_propagate(False)
 
 weer_plaatsnaam = tk.Label(weer, textvariable=plaatsnaam, fg='#212b5c', bg='white', font=('', 20, 'bold'))
 weer_plaatsnaam.grid(column=0, row=0, sticky='nw', padx=3)
+weer_regenkanstext = tk.Label(weer, textvariable=regenkans, fg='#212b5c', bg='white', font=('', 20))
+weer_regenkanstext.grid(column=0, row=2, sticky='nw', padx=3)
+weer_temp = tk.Label(weer, textvariable=weer_temp_now, fg='#212b5c', bg='white', font=('', 20))
+weer_temp.grid(column=0, row=1, sticky='nw', padx=3)
 
 # -------------------------------------------------------------------------------------------------------------------- #
 

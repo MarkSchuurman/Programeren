@@ -28,7 +28,7 @@ def naam():
 
 
 def station():
-    stations = ['Amsterdam', 'Hilversum', 'Utrecht']
+    stations = ['Almere', 'Arnhem', 'Utrecht']
     return random.choice(stations)
 
 
